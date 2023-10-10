@@ -14,7 +14,7 @@ export interface ThemeType {
   fontSizes: FontSizesType;
   fontWeights: FontWeightsType;
 }
-export const theme: DefaultTheme = {
+export const theme: ThemeType = {
   colors,
   borderRadius,
   space,
