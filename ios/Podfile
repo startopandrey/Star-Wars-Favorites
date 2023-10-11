@@ -1,4 +1,7 @@
+
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+
+pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 # Resolve react_native_pods.rb with node to allow for hoisting
 
 # target 'TestSetup' do
@@ -28,6 +31,7 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 #   end
 # end
+
 
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
