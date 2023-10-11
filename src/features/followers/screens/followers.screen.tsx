@@ -1,6 +1,5 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native';
 import Follower, {
   FollowersStackNavigatorParamList,
 } from '../../../types/followers';
@@ -14,12 +13,9 @@ import {
   Header,
   Title,
 } from '../components/followers.styles';
-import {Text} from 'react-native';
-import {Button} from 'react-native-paper';
 import {Card} from '../components/card.component';
 import {SafeArea} from '../../../components/safe-area/safe-area.component';
 import {FollowersTable} from '../components/followers-table.component';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import {FavouritesContext} from '../../../services/favourites/favourites.context';
 export const FollowersScreen = ({navigation}: Props) => {
   const {favourites, removeAllFavourites} = React.useContext(FavouritesContext);
@@ -45,7 +41,7 @@ export const FollowersScreen = ({navigation}: Props) => {
         <Card count={maleCount} title={'Male Fans'} />
         <Card count={otherCount} title={'Others'} />
       </CounterWrapper>
-      <FollowersTable></FollowersTable>
+      <FollowersTable navigation={navigation}></FollowersTable>
     </SafeArea>
   );
 };
