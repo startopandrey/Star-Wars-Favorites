@@ -13,7 +13,7 @@ const defaultTextStyles = (theme: ThemeType) => `
 `;
 
 const body = (theme: ThemeType, color: string) => `
-    font-size: ${theme.fontSizes.body};
+   font-size: ${theme.fontSizes.subtitle};
    
     font-weight: ${theme.fontWeights.regular};
     color: ${color}
