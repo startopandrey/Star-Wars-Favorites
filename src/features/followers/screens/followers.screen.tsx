@@ -16,12 +16,14 @@ import {Text} from 'react-native';
 import {Button} from 'react-native-paper';
 import {Card} from '../components/card.component';
 import {SafeArea} from '../../../components/safe-area/safe-area.component';
-
+import {FollowersTable} from '../components/followers-table.component';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 export const FollowersScreen = ({navigation}: Props) => {
   return (
     <SafeArea>
       <Header>
         <Title variant="title">Fans</Title>
+
         <ClearButton mode="outlined" onPress={() => console.log('Pressed')}>
           Clear fans
         </ClearButton>
@@ -31,6 +33,7 @@ export const FollowersScreen = ({navigation}: Props) => {
         <Card count={0} title={'Male Fans'} />
         <Card count={0} title={'Others'} />
       </CounterWrapper>
+      <FollowersTable></FollowersTable>
     </SafeArea>
   );
 };
