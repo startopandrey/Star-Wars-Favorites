@@ -5,6 +5,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {FollowersContext} from '../../../services/followers/followers.context';
 import styled from 'styled-components/native';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
+import {FavouritesContext} from '../../../services/favourites/favourites.context';
+import { theme } from '../../../infrastructure/theme';
 const DataWrapper = styled.View`
   flex: 1;
   width: 450px;
@@ -25,11 +27,14 @@ export const FollowersTable = ({}) => {
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
     numberOfItemsPerPageList[0],
   );
+  const {favourites, addToFavourites, removeFromFavourites} =
+    React.useContext(FavouritesContext);
+
   const {followers, isLoading} = React.useContext(FollowersContext);
   const followersCount = followers?.length ?? 0;
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, followersCount);
-
+  const followersPaginated = followers?.slice(from, to);
   React.useEffect(() => {
     setPage(0);
   }, [itemsPerPage]);
@@ -49,33 +54,46 @@ export const FollowersTable = ({}) => {
             </DataTable.Header>
             {isLoading || !followers?.length || !followers ? (
               <LoadingWrapper>
-                <Loading style={{padding: 100}} size={50} animating={true} />
+                <Loading size={50} animating={true} />
               </LoadingWrapper>
             ) : (
-              followers?.slice(from, to).map(item => (
-                <DataTable.Row key={item.id}>
-                  <DataTable.Cell>
-                    <IconButton>
-                      <Icon name="heart" size={20} />
-                    </IconButton>
-                  </DataTable.Cell>
-                  <DataTable.Cell
-                    style={{justifyContent: 'flex-start'}}
-                    textStyle={{textAlign: 'right'}}>
-                    {item.name}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={{justifyContent: 'flex-end'}}>
-                    {item.gender}
-                  </DataTable.Cell>
-                  <DataTable.Cell style={{justifyContent: 'flex-end'}}>
-                    {item.birthYear}
-                  </DataTable.Cell>
-                </DataTable.Row>
-              ))
+              followersPaginated?.map(item => {
+                const isFavourite: boolean = !!favourites?.find(
+                  r => r.id === item.id,
+                );
+                return (
+                  <DataTable.Row key={item.id}>
+                    <DataTable.Cell>
+                      <IconButton
+                        onPress={() =>
+                          !isFavourite
+                            ? addToFavourites(item)
+                            : removeFromFavourites(item)
+                        }>
+                        <Icon
+                          name={isFavourite ? 'heart' : 'heart-o'}
+                          color={theme.colors.ui.error}
+                          size={20}
+                        />
+                      </IconButton>
+                    </DataTable.Cell>
+                    <DataTable.Cell
+                      style={{justifyContent: 'flex-start'}}
+                      textStyle={{textAlign: 'right'}}>
+                      {item.name}
+                    </DataTable.Cell>
+                    <DataTable.Cell style={{justifyContent: 'flex-end'}}>
+                      {item.gender}
+                    </DataTable.Cell>
+                    <DataTable.Cell style={{justifyContent: 'flex-end'}}>
+                      {item.birthYear}
+                    </DataTable.Cell>
+                  </DataTable.Row>
+                );
+              })
             )}
           </DataWrapper>
         </ScrollView>
-
         <DataTable.Pagination
           page={page}
           numberOfPages={Math.ceil(followersCount / itemsPerPage)}
