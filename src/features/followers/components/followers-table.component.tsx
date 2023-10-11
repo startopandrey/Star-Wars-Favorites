@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView} from 'react-native';
 import {DataTable} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {FollowersContext} from '../../../services/followers/followers.context';
 import styled from 'styled-components/native';
-import {ActivityIndicator, MD2Colors} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 import {FavouritesContext} from '../../../services/favourites/favourites.context';
-import { theme } from '../../../infrastructure/theme';
+import {theme} from '../../../infrastructure/theme';
 const DataWrapper = styled.View`
   flex: 1;
   width: 450px;
@@ -21,7 +21,7 @@ const Loading = styled(ActivityIndicator)`
   padding: 100px;
 `;
 const IconButton = styled.TouchableOpacity``;
-export const FollowersTable = ({}) => {
+export const FollowersTable = ({navigation}) => {
   const [page, setPage] = React.useState<number>(0);
   const [numberOfItemsPerPageList] = React.useState([5, 10, 15]);
   const [itemsPerPage, onItemsPerPageChange] = React.useState(
@@ -62,7 +62,13 @@ export const FollowersTable = ({}) => {
                   r => r.id === item.id,
                 );
                 return (
-                  <DataTable.Row key={item.id}>
+                  <DataTable.Row
+                    onPress={() =>
+                      navigation.navigate('FollowerDetails', {
+                        follower: item,
+                      })
+                    }
+                    key={item.id}>
                     <DataTable.Cell>
                       <IconButton
                         onPress={() =>
