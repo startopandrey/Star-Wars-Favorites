@@ -11,7 +11,7 @@ export const Title = styled(Text)``;
 export const ClearButton = styled(Button)``;
 export const CounterWrapper = styled.View`
   padding: ${props => props.theme.space[2]};
-  gap: 10;
+  gap: 10px;
   flex-direction: row;
   justify-content: space-between;
 `;
