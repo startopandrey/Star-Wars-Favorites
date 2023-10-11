@@ -1,7 +1,9 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native';
-import {FollowersStackNavigatorParamList} from '../../../types/followers';
+import Follower, {
+  FollowersStackNavigatorParamList,
+} from '../../../types/followers';
 type Props = NativeStackScreenProps<
   FollowersStackNavigatorParamList,
   'Followers'
@@ -18,20 +20,30 @@ import {Card} from '../components/card.component';
 import {SafeArea} from '../../../components/safe-area/safe-area.component';
 import {FollowersTable} from '../components/followers-table.component';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import {FavouritesContext} from '../../../services/favourites/favourites.context';
 export const FollowersScreen = ({navigation}: Props) => {
+  const {favourites, removeAllFavourites} = React.useContext(FavouritesContext);
+  const femaleCount = favourites.filter(
+    (el: Follower) => el.gender === 'female',
+  ).length;
+  const maleCount = favourites.filter(
+    (el: Follower) => el.gender === 'male',
+  ).length;
+  const otherCount = favourites.filter(
+    (el: Follower) => el.gender === 'n/a',
+  ).length;
   return (
     <SafeArea>
       <Header>
         <Title variant="title">Fans</Title>
-
-        <ClearButton mode="outlined" onPress={() => console.log('Pressed')}>
+        <ClearButton mode="outlined" onPress={removeAllFavourites}>
           Clear fans
         </ClearButton>
       </Header>
       <CounterWrapper>
-        <Card count={0} title={'Female Fans'} />
-        <Card count={0} title={'Male Fans'} />
-        <Card count={0} title={'Others'} />
+        <Card count={femaleCount} title={'Female Fans'} />
+        <Card count={maleCount} title={'Male Fans'} />
+        <Card count={otherCount} title={'Others'} />
       </CounterWrapper>
       <FollowersTable></FollowersTable>
     </SafeArea>

@@ -5,7 +5,7 @@ interface FavouritesContextType {
   favourites: Follower[];
   addToFavourites: (apartment: Follower) => void;
   removeFromFavourites: (apartment: Follower) => void;
-  removeAllFavourites: (uid: string) => void;
+  removeAllFavourites: () => void;
 }
 export const FavouritesContext = createContext<FavouritesContextType>(
   {} as FavouritesContextType,
