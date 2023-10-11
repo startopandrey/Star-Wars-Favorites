@@ -2,21 +2,25 @@ export type FollowersStackNavigatorParamList = {
   Followers: undefined;
   FollowerDetails: undefined;
 };
-export interface FollowersContextType {}
 
 export default interface Follower {
-  _id?: string;
-  birth_year: string;
-  eye_color?: string;
+  id?: string;
+  birthYear: string;
+  eyeColor?: string;
   films?: string[];
   gender: string;
-  hair_color?: string;
+  hairColor?: string;
   height?: string;
   homeworld?: string;
   mass?: string;
   name: string;
-  skin_color?: string;
+  skinColor?: string;
   species?: string[];
   starships?: string[];
   vehicles?: string[];
 } // eslint-disable-line
+
+export interface FollowersContextType {
+  followers: Follower[] | null;
+  isLoading: boolean;
+}
